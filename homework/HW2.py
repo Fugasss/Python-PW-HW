@@ -1,25 +1,53 @@
 import math as math
+import numpy as numpy
 
 
-def findRoots(a, b, c):
+# If there is only one root the method will return
+# root as a first variable and None for the second:
+# x1 = root
+# x2 = None
+# In case there is two roots the method will return
+# both roots
+# x1 = root1
+# x2 = root2
+# otherwise None for both will be returned
+# x1 = None
+# x2 = None
+def find_quadratic_roots(a, b, c):
     D = b ** 2 - 4 * a * c
 
-    hasRoots = True
-
     if D < 0:
-        print("There are no valid roots!")
-        hasRoots = False
-        return (hasRoots, None, None)
+        return (None, None)
     elif D == 0:
         x = (-b) / (2 * a)
-        print(f'Root = {x}')
-        return (hasRoots, x, None)
+        return (x, None)
     else:
         x1 = (-b + math.sqrt(D)) / (2 * a)
         x2 = (-b - math.sqrt(D)) / (2 * a)
+        return (x1, x2)
 
-        print(f"Root 1 = {x1}\tRoot 2 = {x2}")
-        return (hasRoots, x1, x2)
+
+def find_biquadratic_roots(a, b, c):
+    (t1, t2) = find_quadratic_roots(a, b, c)
+    (x1, x2, x3, x4) = (None, None, None, None)
+
+    if t1 is not None and t1 >= 0:
+        x1 = math.sqrt(t1)
+        x2 = -x1
+    if t2 is not None and t2 >= 0:
+        x3 = math.sqrt(t2)
+        x4 = -x3
+
+    return (x1, x2, x3, x4)
+
+
+def print_roots(x1, x2):
+    if x1 is None and x2 is None:
+        print("There are no valid roots!")
+    elif x2 is None:
+        print(f'Root = {x1}')
+    else:
+        print(f"Root #1 = {x1}\tRoot #2 = {x2}")
 
 
 def task1():
@@ -81,7 +109,8 @@ def task4():
     b = float(input())
     c = float(input())
 
-    findRoots(a, b, c)
+    (x1, x2) = find_quadratic_roots(a, b, c)
+    print_roots(x1, x2)
 
 
 def task5():
@@ -91,7 +120,8 @@ def task5():
     b = 1 - math.sqrt(3 / (3 + abs(math.tan(a * (h ** 2)) - math.sin(a * h))))
     c = a * (h ** 2) * math.sin(b * h) + b * (h ** 3) * math.cos(a * h)
 
-    findRoots(a, b, c)
+    (x1, x2) = find_quadratic_roots(a, b, c)
+    print_roots(x1, x2)
 
 
 def task6():
@@ -102,13 +132,94 @@ def task6():
     b2 = float(input())
     c2 = float(input())
 
-    (hasRoots1, x1, x2) = findRoots(a1, b1, c1)
-    (hasRoots2, x3, x4) = findRoots(a2, b2, c2)
-    if not hasRoots1 or not hasRoots2:
-        return
+    (x1, x2) = find_quadratic_roots(a1, b1, c1)
+    (x3, x4) = find_quadratic_roots(a2, b2, c2)
+    roots = [x1, x2, x3, x4]
+    valid_roots = set([item for item in roots if item is not None and roots.count(item) > 1])
 
-    if x1 == x3 or (x2 is not None and x1 == x4):
-        print(f"The first root of the system is {x1}")
+    print(f"Roots: {valid_roots}")
 
-    if (x2 is not None and x2 == x3) or (x2 is not None and x4 is not None and x2 == x4 ):
-        print(f"The second root of the system is {x2}")
+
+def task7():
+    a = float(input())
+    b = float(input())
+    c = float(input())
+
+    roots = list(find_biquadratic_roots(a, b, c))
+    valid_roots = set([item for item in roots if item is not None])
+
+    print(f"Roots: {valid_roots}")
+
+
+# example input:
+# -0.5
+# 0
+# -0.139
+# 0
+# 3.6
+# -1
+# 1
+# example output:
+# Points lie on the different parts of the plane
+def task8():
+    x1 = float(input())
+    y1 = float(input())
+    x2 = float(input())
+    y2 = float(input())
+    s = float(input())
+    t = float(input())
+    u = float(input())
+
+    def line_eq(x):
+        return -(s * x + u) / t
+
+    l1 = line_eq(x1)
+    l2 = line_eq(x2)
+
+    if (y1 > l1 and y2 > l2) or (y1 < l1 and y2 < l2):
+        print("Points lie on the same half of the plane")
+    else:
+        print("Points lie on the different parts of the plane")
+
+# Example input:
+# 3
+# 4
+# 0.5
+# 3
+# 1.7
+# 1.7
+# 0.4
+# -2
+# Example output:
+# Points lie on the different parts of the plane
+def task9():
+    x1 = float(input())
+    y1 = float(input())
+    x2 = float(input())
+    y2 = float(input())
+    x3 = float(input())
+    y3 = float(input())
+    x4 = float(input())
+    y4 = float(input())
+
+    def line_eq(x):
+        return (y4 - y3) / (x4 - x3) * (x - x3) + y3
+
+    l1 = line_eq(x1)
+    l2 = line_eq(x2)
+
+    if (y1 > l1 and y2 > l2) or (y1 < l1 and y2 < l2):
+        print("Points lie on the same half of the plane")
+    else:
+        print("Points lie on the different parts of the plane")
+
+
+def task10():
+    x1 = float(input())
+    y1 = float(input())
+    x2 = float(input())
+    y2 = float(input())
+    x3 = float(input())
+    y3 = float(input())
+
+    
