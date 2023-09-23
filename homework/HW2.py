@@ -439,6 +439,3 @@ def task20():
     print(f1(vec))
     print(f2(vec))
     print(f3(vec))
-
-
-task20()
