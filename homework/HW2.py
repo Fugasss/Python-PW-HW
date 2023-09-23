@@ -1,5 +1,16 @@
 import math as math
-import numpy as numpy
+
+
+class Vec2:
+    def __init__(self, xv, yv):
+        self.x = xv
+        self.y = yv
+
+    def __sub__(self, other):
+        return Vec2(self.x - other.x, self.y - other.y)
+
+    def length(self):
+        return math.sqrt(self.x * self.x + self.y * self.y)
 
 
 # If there is only one root the method will return
@@ -181,6 +192,7 @@ def task8():
     else:
         print("Points lie on the different parts of the plane")
 
+
 # Example input:
 # 3
 # 4
@@ -214,12 +226,219 @@ def task9():
         print("Points lie on the different parts of the plane")
 
 
-def task10():
-    x1 = float(input())
-    y1 = float(input())
-    x2 = float(input())
-    y2 = float(input())
-    x3 = float(input())
-    y3 = float(input())
+def area(v1, v2, v3):
+    A = (v2 - v1).length()
+    B = (v3 - v1).length()
+    C = (v3 - v2).length()
 
-    
+    p = (A + B + C) / 2
+
+    return round(math.sqrt(p * (p - A) * (p - B) * (p - C)), 3)
+
+
+def task10():
+    v1 = Vec2(float(input()), float(input()))
+    v2 = Vec2(float(input()), float(input()))
+    v3 = Vec2(float(input()), float(input()))
+    vi = Vec2(float(input()), float(input()))
+
+    s = area(v1, v2, v3)
+    s1 = area(v1, v2, vi)
+    s2 = area(v1, v3, vi)
+    s3 = area(v2, v3, vi)
+
+    print(f'S: {s}\t s1 = {s1}\ts2={s2}\ts3={s3}')
+
+    if s == (s1 + s2 + s3):
+        print("Point inside")
+    else:
+        print("Point outsider")
+
+
+def can_fit(a, b, c, d):
+    return (a / c >= 1 and b / d >= 1) or (a / d >= 1 and b / c >= 1)
+
+
+def task11():
+    a = float(input())
+    b = float(input())
+    c = float(input())
+    d = float(input())
+
+    if can_fit(a, b, c, d):
+        print("Can fit")
+    else:
+        print("Can't fit")
+
+
+def task12():
+    a = float(input())
+    b = float(input())
+    c = float(input())
+    x = float(input())
+    y = float(input())
+
+    if can_fit(a, b, x, y) or can_fit(a, c, x, y) or can_fit(b, c, x, y):
+        print("Can fit")
+    else:
+        print("Can't fit")
+
+
+def task13():
+    def f(x):
+        if -2 <= x < 2:
+            return x * x
+
+        return 4
+
+    a = float(input())
+
+    print(f(a))
+
+
+def task14():
+    def f(x):
+        v = x * x + 4 * x + 5
+        if x <= 2:
+            return v
+
+        return 1 / v
+
+    a = float(input())
+
+    print(f(a))
+
+
+def task15():
+    def f(x):
+        if x <= 0:
+            return 0
+        elif 0 < x <= 1:
+            return x
+
+        return x ** 4
+
+    a = float(input())
+
+    print(f(a))
+
+
+def task16():
+    def f(x):
+        if x <= 0:
+            return 0
+        elif 0 < x <= 1:
+            return x * x - x
+
+        return x * x - math.sin(math.pi * x * x)
+
+    a = float(input())
+
+    print(f(a))
+
+
+def task17():
+    def f1(x):
+        if x <= 0:
+            return -x
+
+        return - x * x
+
+    def f2(x):
+        if x <= -1:
+            return -1 / (x * x)
+        if -1 < x <= 2:
+            return x * x
+
+        return 4
+
+    a = float(input())
+
+    print(f1(a))
+    print(f2(a))
+
+
+def task18():
+    def f1(x):
+        if x <= 0:
+            return abs(x + 1)
+
+        return abs(x - 1)
+
+    def f2(x):
+        if x <= 1:
+            return abs(x)
+        elif 1 < x <= 2:
+            return 1
+
+        return -2 * x + 5
+
+    a = float(input())
+
+    print(f1(a))
+    print(f2(a))
+
+
+def task19():
+    def f1(v):  # circle
+        if v.length() <= 1:
+            return "Inside the unit circle"
+
+        return "Not in the unit circle"
+
+    def f2(v):  # ring
+        if 0.5 <= v.length() <= 1:
+            return "Inside the ring"
+
+        return "Not in the ring"
+
+    def f3(v):  # square
+        if abs(v.x) <= 1 and abs(v.y) <= 1:
+            return "Inside the square"
+
+        return "Not in the square"
+
+    vec = Vec2(float(input()), float(input()))
+
+    print(f1(vec))
+    print(f2(vec))
+    print(f3(vec))
+
+
+def task20():
+    def f1(v):  # rhombus
+        lf = abs(v.x) - 1
+        uf = -abs(v.x) + 1
+
+        if uf >= v.y >= lf:
+            return "Inside the rhombus"
+
+        return "Not in the rhombus"
+
+    def f2(v):  # crystal
+        lf = 2 * abs(v.x) - 1
+        uf = -2 * abs(v.x) + 1
+
+        if uf >= v.y >= lf:
+            return "Inside the crystal"
+
+        return "Not in the crystal"
+
+    def f3(v):  # blob
+        inthecircle = v.length() <= 1
+        lf = -(v.x + 2) / 2
+        uf = (v.x + 2) / 2
+
+        if inthecircle and lf <= v.y <= uf:
+            return "In the blob"
+
+        return "Not in the blob"
+
+    vec = Vec2(float(input()), float(input()))
+
+    print(f1(vec))
+    print(f2(vec))
+    print(f3(vec))
+
+
+task20()
