@@ -143,6 +143,10 @@ def task6():
     b2 = float(input())
     c2 = float(input())
 
+    if abs(a1*b2 - b1 * a2) < 1E-5:
+        print("No solution")
+        return
+    
     (x1, x2) = find_quadratic_roots(a1, b1, c1)
     (x3, x4) = find_quadratic_roots(a2, b2, c2)
     roots = [x1, x2, x3, x4]
