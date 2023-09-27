@@ -143,7 +143,7 @@ def task6():
     b2 = float(input())
     c2 = float(input())
 
-    if abs(a1*b2 - b1 * a2) < 1E-5:
+    if abs(a1 * b2 - b1 * a2) < 1E-5:
         print("No solution")
         return
     
