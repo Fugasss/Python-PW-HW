@@ -116,9 +116,11 @@ def task9():
 
 def task10():
     result = 1
-    for i in range(0.1, 10.1, 0.1):
-        result *= (1 + math.sin(i))
-
+    
+    for i in range(1, 101):
+        result *= (1 + math.sin(i/10))
+    
+    print(result)
 
 def task11():
     x = float(input())
