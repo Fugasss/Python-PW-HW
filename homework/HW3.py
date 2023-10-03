@@ -136,18 +136,14 @@ def task11():
 
 
 def task12():
-    x = float(input())
-    a = float(input())
+    x, a = float(input()), float(input())
     n = int(input())
 
-    result = (x + a) ** 2
+    for i in range(n):
+        x = (x + a) ** 2
+    x+=a
 
-    for i in range(0, n):
-        result += (result + a) ** 2
-
-    result += a
-
-    print(result)
+    print(x)
 
 
 def task13():
