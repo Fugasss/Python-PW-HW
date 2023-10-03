@@ -22,6 +22,30 @@ def is_full_square(n):
     return abs(r - floor(r)) < 1E-10
 
 
+def is_5pow(a):
+    b = 1
+
+    while b < a:
+        b *= 5
+
+    return b == a
+
+
+def is_prime(a):
+    if a == 1:
+        return False
+
+    for i in range(2, int(sqrt(a)) + 1):
+        if a % i == 0:
+            return False
+
+    return True
+#
+# for i in range(1, 1000):
+#     if is_prime(i):
+#         print(i)
+
+
 def task1():
     def f(a, b, c):
         return (2 * a - b - sin(c)) / (5 + fabs(c))
@@ -208,15 +232,66 @@ def task23():
 def task9():
     n = int(input("Enter n: "))
     print(f"Enter {n} numbers of a sequence")
-    a = input_numbers(n)
+    inp = input_numbers(n)
 
+    def find_sequence(cond):
+        start = 0
+        end = 0
+        length = 0
+
+        for i in range(1, n):
+            if cond(inp[i - 1]) and cond(inp[i]):
+                end = i
+            elif not cond(inp[i - 1]) and cond(inp[i]):
+                start = i
+            else:
+                if end - start > length:
+                    length = end - start
+
+        return inp[start:end + 1]
+
+    a = find_sequence(is_full_square)
+    b = find_sequence(is_5pow)
+    c = find_sequence(is_prime)
+
+    print(f"a) {a}")
+    print(f"b) {b}")
+    print(f"c) {c}")
 
 
 def task10():
     n = int(input("Enter n: "))
-    a = range(1, n + 1)
+    a = list(range(1, n + 1))
     print(a)
+    b = []
+    for i in a:
+        for j in range(1, n + 1):
+            for k in range(j, n + 1):
+                if j*j + k*k > i:
+                    break
+
+                if i == j*j + k*k:
+                    b.append(i)
+
+    print(sorted(set(b)))
 
 
 def task11():
-    pass
+    n = int(input("Enter n: "))
+
+    def divisors(a):
+        d = []
+
+        for i in range(1, a):
+            if round(a / i - int(a/i), 5) == 0:
+                d.append(i)
+
+        return d
+
+    perf = []
+    for i in range(1, n):
+        div = divisors(i)
+        if sum(div) == i:
+            perf.append(i)
+
+    print(perf)
