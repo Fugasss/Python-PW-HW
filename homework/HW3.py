@@ -212,19 +212,41 @@ def task17():
     print(a(n))
 
 
+def task17_withoutrecursion():
+    n = int(input())
+    a = 1
+    for i in range(1, n + 1):
+        a = i * a + 1 / i
+    print(a)
+
+
 def task18():
     def v(i):
         if i == 3:
             return 1.5
         elif i < 3:
             return 0
-
         return (i + 1) / (i * i + 1) * (v(i - 1)) - v(i - 2) * v(i - 3)
 
     n = int(input())
 
     print(v(n))
 
+
+def task18_withoutrecursion():
+    n = int(input())
+
+    al1 = 1.5
+    al2 = 0
+    al3 = 0
+    for i in range(4, n+1):
+        m = (i + 1) / (i * i + 1)
+        a = m * al1 - al2 * al3
+        al3 = al2
+        al2 = al1
+        al1 = a
+
+    print(al1)
 
 def task19():
     q = float(input())
@@ -245,6 +267,25 @@ def task19():
     print(x(n))
 
 
+def task19_withoutrecursion():
+    q = float(input())
+    r = float(input())
+    b = float(input())
+    c = float(input())
+    d = float(input())
+    n = int(input())
+
+    x0 = c
+    x1 = d
+
+    for i in range(2, n + 1):
+        x = q * x1 + r * x0 + b
+        x0 = x1
+        x1 = x
+
+    print(x1)
+
+
 def task20():
     def u(i):
         if i <= 2:
@@ -263,6 +304,23 @@ def task20():
     print(v(n))
 
 
+def task20_withoutrecursion():
+    n = int(input())
+
+    u1, u2 = 0, 0
+    v1, v2 = 1, 1
+
+    for i in range(3, n + 1):
+        u = (u2 - u1 * v2 - v1) / (1 + u2 ** 2 + v2 ** 2)
+        v = (u2 - v2) / (abs(u1 + v2) + 2)
+        u1 = u2
+        u2 = u
+        v1 = v2
+        v2 = v
+
+    print(v2)
+
+
 def task21():
     def a(i):
         if i <= 1:
@@ -274,5 +332,17 @@ def task21():
 
     for i in range(0, 15):
         result *= a(i)
+
+    print(result)
+
+
+def task21_withoutrecursion():
+    a0, a1, result = 1, 1, 1
+
+    for i in range(2, 15):
+        a = a0 + a1 / (2 ** (i - 1))
+        a0 = a1
+        a1 = a
+        result *= a
 
     print(result)
