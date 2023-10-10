@@ -261,19 +261,21 @@ def task9():
 
 def task10():
     n = int(input("Enter n: "))
-    a = list(range(1, n + 1))
-    print(a)
+    sn = round(sqrt(n)) + 1
     b = []
-    for i in a:
-        for j in range(1, n + 1):
-            for k in range(j, n + 1):
+    for i in range(1, n + 1):
+        for j in range(0, sn):
+            for k in range(j, sn):
                 if j*j + k*k > i:
                     break
 
-                if i == j*j + k*k:
+                if i == j*j + k*k and b.count(i) == 0:
                     b.append(i)
 
     print(sorted(set(b)))
+
+
+task10()
 
 
 def task11():
