@@ -116,11 +116,12 @@ def task9():
 
 def task10():
     result = 1
-    
+
     for i in range(1, 101):
-        result *= (1 + math.sin(i/10))
-    
+        result *= (1 + math.sin(i / 10))
+
     print(result)
+
 
 def task11():
     x = float(input())
@@ -141,7 +142,7 @@ def task12():
 
     for i in range(n):
         x = (x + a) ** 2
-    x+=a
+    x += a
 
     print(x)
 
@@ -235,7 +236,7 @@ def task18_withoutrecursion():
     al1 = 1.5
     al2 = 0
     al3 = 0
-    for i in range(4, n+1):
+    for i in range(4, n + 1):
         m = (i + 1) / (i * i + 1)
         a = m * al1 - al2 * al3
         al3 = al2
@@ -243,6 +244,7 @@ def task18_withoutrecursion():
         al1 = a
 
     print(al1)
+
 
 def task19():
     q = float(input())
@@ -322,7 +324,7 @@ def task21():
         if i <= 1:
             return 1
 
-        return a(i-2) + a(i-1) / (2 ** (i - 1))
+        return a(i - 2) + a(i - 1) / (2 ** (i - 1))
 
     result = 1
 
@@ -342,3 +344,8 @@ def task21_withoutrecursion():
         result *= a
 
     print(result)
+
+
+# Vi = Vi-1 + Vi-2
+# Vi-2 = Vi-1
+# Vi-1 = Vi

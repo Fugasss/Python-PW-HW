@@ -40,10 +40,6 @@ def is_prime(a):
             return False
 
     return True
-#
-# for i in range(1, 1000):
-#     if is_prime(i):
-#         print(i)
 
 
 def task1():
@@ -149,6 +145,73 @@ def task8():
     print(result)
 
 
+def task9():
+    n = int(input("Enter n: "))
+    print(f"Enter {n} numbers of a sequence")
+    inp = input_numbers(n)
+
+    def find_sequence(cond):
+        start = 0
+        end = 0
+        length = 0
+
+        for i in range(1, n):
+            if cond(inp[i - 1]) and cond(inp[i]):
+                end = i
+            elif not cond(inp[i - 1]) and cond(inp[i]):
+                start = i
+            else:
+                if end - start > length:
+                    length = end - start
+
+        return inp[start:end + 1]
+
+    a = find_sequence(is_full_square)
+    b = find_sequence(is_5pow)
+    c = find_sequence(is_prime)
+
+    print(f"a) {a}")
+    print(f"b) {b}")
+    print(f"c) {c}")
+
+
+def task10():
+    n = int(input("Enter n: "))
+    sn = round(sqrt(n)) + 1
+    b = []
+    for i in range(1, n + 1):
+        for j in range(0, sn):
+            for k in range(j, sn):
+                if j * j + k * k > i:
+                    break
+
+                if i == j * j + k * k and b.count(i) == 0:
+                    b.append(i)
+
+    print(sorted(set(b)))
+
+
+def task11():
+    n = int(input("Enter n: "))
+
+    def divisors(a):
+        d = []
+
+        for i in range(1, a):
+            if round(a / i - int(a / i), 5) == 0:
+                d.append(i)
+
+        return d
+
+    perf = []
+    for i in range(1, n):
+        div = divisors(i)
+        if sum(div) == i:
+            perf.append(i)
+
+    print(perf)
+
+
 def task12():
     result = my_sum(1, 100, lambda i: my_sum(1, 50, lambda j: 1 / (i + j * j)))
     print(result)
@@ -228,72 +291,3 @@ def task23():
     result = h(s, t) + max(h(s - t, s * t) ** 2, h(s - t, s + t) ** 4 + h(1, 1))
     print(result)
 
-
-def task9():
-    n = int(input("Enter n: "))
-    print(f"Enter {n} numbers of a sequence")
-    inp = input_numbers(n)
-
-    def find_sequence(cond):
-        start = 0
-        end = 0
-        length = 0
-
-        for i in range(1, n):
-            if cond(inp[i - 1]) and cond(inp[i]):
-                end = i
-            elif not cond(inp[i - 1]) and cond(inp[i]):
-                start = i
-            else:
-                if end - start > length:
-                    length = end - start
-
-        return inp[start:end + 1]
-
-    a = find_sequence(is_full_square)
-    b = find_sequence(is_5pow)
-    c = find_sequence(is_prime)
-
-    print(f"a) {a}")
-    print(f"b) {b}")
-    print(f"c) {c}")
-
-
-def task10():
-    n = int(input("Enter n: "))
-    sn = round(sqrt(n)) + 1
-    b = []
-    for i in range(1, n + 1):
-        for j in range(0, sn):
-            for k in range(j, sn):
-                if j*j + k*k > i:
-                    break
-
-                if i == j*j + k*k and b.count(i) == 0:
-                    b.append(i)
-
-    print(sorted(set(b)))
-
-
-task10()
-
-
-def task11():
-    n = int(input("Enter n: "))
-
-    def divisors(a):
-        d = []
-
-        for i in range(1, a):
-            if round(a / i - int(a/i), 5) == 0:
-                d.append(i)
-
-        return d
-
-    perf = []
-    for i in range(1, n):
-        div = divisors(i)
-        if sum(div) == i:
-            perf.append(i)
-
-    print(perf)
