@@ -272,6 +272,12 @@ def task12():
 
             if value[i] == '(':
                 end = value.find(')', i)
+                lbracketsCount = value.count('(', i, end)
+                k = i
+                while lbracketsCount > 0:
+                    end = value.find(')', k)
+                    lbracketsCount -= 1
+
                 txt += makepostfix(value[i + 1:end])
                 i += end - i + 1
 
@@ -280,8 +286,15 @@ def task12():
 
             if value[i] in '+-/*':
                 if i + 1 < len(value) and value[i + 1] == '(':
+
                     end = value.find(')', i + 1)
-                    txt += makepostfix(value[i + 2:end])
+                    lbracketsCount = value.count('(', i + 1, end)
+                    k = i
+                    while lbracketsCount > 0:
+                        end = value.find(')', k)
+                        lbracketsCount -= 1
+
+                    txt += makepostfix(value[i + 2:end + 1])
                     txt += value[i]
                     i += end - (i + 1) + 1
                 else:
@@ -293,4 +306,104 @@ def task12():
     print(makepostfix(text))
 
 
-task12()
+# functions for the next tasks
+
+def getinput() -> (int, str):
+    n = int(input("Enter n: "))
+    s = ''
+    for i in range(n):
+        s += input(f'Enter character {i + 1}/{n}: ')
+
+    return n, s
+
+
+def task13():
+    n, s = getinput()
+
+    print(f'The letter "x" occurs {s.count("x")} times')
+
+
+def task14():
+    n, s = getinput()
+
+    print(f'a) The letter "+" occurs {s.count("+")} times\t  The letter "*" occurs {s.count("*")} times')
+    print(f'a) The letters "+", "-", "*" occur {s.count("+") + s.count("-") + s.count("*")} times')
+
+
+def task15():
+    n, s = getinput()
+
+    print(f"Initial input: {s}")
+    print(f"1) {s.replace('!', '.')}")
+    print(f"2) {s.replace('.', '...')}")
+
+
+def task16():
+    n, s = getinput()
+
+    print(f"Initial input: {s}")
+
+    if s.find('.-') != -1:
+        print(f'The sequence has .-')
+    else:
+        print(f'The sequence doesnt has .-')
+
+
+def task17():
+    n, s = getinput()
+
+    print(f"Initial input: {s}")
+
+    if s.find('a') != -1:
+        print(s.find('a'))
+    else:
+        print(0)
+
+
+def task18():
+    n, s = getinput()
+
+    print(f"Initial input:{s}")
+
+    s = s[:s.find(' ')]
+
+    sa, sb, sc = '', '', ''
+    for i in s:
+        if i.isalpha():  # for a
+            sa += i
+
+        if i.islower():  # for b
+            sb += i.upper()
+        else:
+            sb += i
+
+        if i.isalpha():  # for c
+            if i.isupper():
+                sc += i.lower()
+            else:
+                sc += i
+
+    print(f"a) {sa}")
+    print(f"b) {sb}")
+    print(f"c) {sc}")
+
+
+def task19():
+    n, s = getinput()
+
+    print(f"Initial input:{s}")
+
+    s = s.strip()
+    result = ''
+
+    i = -1
+    while i + 1 < len(s):
+        i += 1
+
+        if i + 1 < len(s) and s[i] == ' ' and s[i + 1] == ' ':
+            continue
+
+        result += s[i]
+
+    print(f"Result:{result}")
+
