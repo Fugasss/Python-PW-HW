@@ -219,7 +219,6 @@ def task9():
     for i in letters:
         if i[0] == i[-1]:
             beginEndOccurenceCount += 1
-
     print(f'The amount of the "f" in the first three groups of letters: {amountOfF}')
     print(f'The amount of groups of letters that begin and end with the same letter: {beginEndOccurenceCount}')
 
@@ -406,4 +405,3 @@ def task19():
         result += s[i]
 
     print(f"Result:{result}")
-
