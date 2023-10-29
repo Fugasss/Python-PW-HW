@@ -1,22 +1,5 @@
 import math
-import re
-
-
-def readnumbers(path: str, cond, converter) -> list:
-    l = list()
-    with open(path, "r") as file:
-        l = [converter(item) for item in file.read().split(" ") if cond(item)]
-        print(l)
-
-    return l
-
-
-def readfloat(path: str) -> list:
-    return readnumbers(path, lambda x: re.match("-?[0-9]+.?[0-9]*", x), lambda x: float(x))
-
-
-def readint(path: str) -> list:
-    return readnumbers(path, lambda x: re.match("-?[0-9]+", x), lambda x: int(x))
+from practice_7_functions import *
 
 
 def task1():
@@ -77,13 +60,6 @@ def task4():
     buffer.close()
 
 
-def readData(f) -> str:
-    s = f.read()
-    f.seek(0)
-    f.truncate(0)
-    return s
-
-
 def task5():
     f1 = open("Task5/f1.txt", "r+")
     f2 = open("Task5/f2.txt", "r+")
@@ -91,11 +67,11 @@ def task5():
     f4 = open("Task5/f4.txt", "r+")
     f5 = open("Task5/f5.txt", "r+")
 
-    f1d = readData(f1)
-    f2d = readData(f2)
-    f3d = readData(f3)
-    f4d = readData(f4)
-    f5d = readData(f5)
+    f1d = readall_and_clear(f1)
+    f2d = readall_and_clear(f2)
+    f3d = readall_and_clear(f3)
+    f4d = readall_and_clear(f4)
+    f5d = readall_and_clear(f5)
 
     f1.write(f5d)
     f2.write(f4d)
@@ -123,32 +99,31 @@ def task6():
 
 
 def task7():
-    with open("Task6/f.txt", "w") as file:
-        file.write(str(list(range(101))).replace(",", "")[1:-1])
+    path = "Task6/f.txt"
+    pathg = "Task6/g.txt"
+    write(path, list(range(101)))
 
-    numbers = readint("Task6/f.txt")
+    numbers = readint(path)
 
-    with open("Task6/g.txt", "w") as file:
-        l = list()
+    l = list()
+    l.append("Evens:\n" +
+             ", ".join([str(item) for item in numbers if item % 2 == 0]) + "\n")
+    l.append("Divisible by 3 and nit divisible by 7:\n" +
+             ", ".join([str(item) for item in numbers if item % 3 == 0 and item % 7 != 0]) + "\n")
+    l.append("Perfect squares:\n" +
+             ", ".join(
+                 [str(item) for item in numbers if int(math.sqrt(item)) * int(math.sqrt(item)) == item]) + "\n")
+    print(l)
+    write(pathg, l)
 
-        l.append("Evens:\n" +
-                 ", ".join([str(item) for item in numbers if item % 2 == 0]) + "\n")
-        l.append("Divisible by 3 and nit divisible by 7:\n" +
-                 ", ".join([str(item) for item in numbers if item % 3 == 0 and item % 7 != 0]) + "\n")
-        l.append("Perfect squares:\n" +
-                 ", ".join([str(item) for item in numbers if int(math.sqrt(item)) * int(math.sqrt(item)) == item]) + "\n")
-
-        print(l)
-
-        file.writelines(l)
 
 def task8():
-    path = "Task6/fibb.txt"
-    with open(path, "w") as file:
-        file.write(str([0, 1, 1, 2, 3, 5, 8, 13, 21, 34]).replace(",", "")[1:-1])
+    path = "Task8/fibb.txt"
+
+    write(path, [0, 1, 1, 2, 3, 5, 8, 13, 21, 34])
 
     with open(path, "r+") as file:
-        nums =file.read().split(" ")[-2:]
+        nums = file.read().split(" ")[-2:]
         n = int(nums[0]) + int(nums[1])
 
         file.write(f" {n}")
@@ -157,8 +132,7 @@ def task8():
 def task9():
     path1 = "Task9/f.txt"
     path2 = "Task9/g.txt"
-    with open(path1, "w") as file:
-        file.write("Biba Bim Boba")
+    write(path1, "Biba Bim Boba")
 
     file1 = open(path1, "r")
     file2 = open(path2, "w")
@@ -170,4 +144,75 @@ def task9():
 
 
 def task10():
-    pass
+    path = "Task10/horner.txt"
+    write(path, "5 4 3 2 1")
+
+    n = float(input("Enter a value: "))
+
+    coeffs = readfloat(path)
+    coeffs.reverse()
+
+    res = 0
+    for i in range(0, len(coeffs)):
+        res += n ** (i) * coeffs[i]
+
+    print(res)
+
+
+def task11():
+    path = "Task11/f.txt"
+    pathg = "Task11/g.txt"
+    pathh = "Task11/h.txt"
+
+    write(path, "1 2 3 4 5 6 7 8 9 10")
+
+    numbers = readint(path)
+
+    write(pathg, listtostring([item for item in numbers if item % 2 == 0]))
+    write(pathh, listtostring([item for item in numbers if item % 2 != 0]))
+
+
+def task12():
+    path = "Task12/f.txt"
+    pathg = "Task12/g.txt"
+
+    write(path, "abcdefghklmoprsqBIBA")
+
+    write(pathg, readstring(path)[::-1])
+
+
+def task13():
+    path = "Task13/f.txt"
+    pathg = "Task13/g.txt"
+    pathh = "Task13/g.txt"
+
+    write(path, "Biba")
+    write(pathg, "Boba")
+
+    write(pathh, readstring(path) + readstring(pathg))
+
+
+def task14():
+    pathf = "Task14/f.txt"
+    pathg = "Task14/g.txt"
+
+    write(pathf, "1 2 3 3 4 9 9 5 6 7 7 8 9 9 9 9 9 9")
+    numbers = remove_duplicates(readint(pathf))
+
+    write(pathg, numbers)
+
+
+def task15():
+    pathf = "Task15/f.txt"
+    pathg = "Task15/g.txt"
+
+    write(pathf, list(range(-10, 10)))
+
+    numbers = readint(pathf)
+
+    file = open(pathg, 'w')
+
+    # DO
+
+    file.close()
+
