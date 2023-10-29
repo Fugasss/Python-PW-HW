@@ -1,4 +1,6 @@
 import math
+import random
+
 from practice_7_functions import *
 
 
@@ -212,7 +214,90 @@ def task15():
 
     file = open(pathg, 'w')
 
-    # DO
+    sign = 1
+    i = -1
+    count = 0
+    max_count = 2
+    indexes_buffer = [0] * max_count
+
+    def lower(x):
+        return x < 0
+
+    def greater(x):
+        return x >= 0
+
+    while i + 1 < len(numbers):
+        i += 1
+
+        comparator = greater if sign == 1 else lower
+
+        if comparator(numbers[i]):
+            if count + 1 == max_count:
+                indexes_buffer[count] = i
+
+                for j in indexes_buffer:
+                    file.write(f"{numbers[j]} ")
+
+                for j in indexes_buffer[::-1]:
+                    del numbers[j]
+
+                sign *= -1
+                i = -1
+                count = 0
+
+            else:
+                indexes_buffer[count] = i
+                count += 1
 
     file.close()
 
+
+def task15(divide_by: int = 2):
+    pathf = "Task15/f.txt"
+    pathg = "Task15/g.txt"
+
+    write(pathf, [random.randint(-10, 10) for item in range(1, (divide_by + 1) * 4)])
+
+    numbers = readint(pathf)
+
+    file = open(pathg, 'w')
+
+    sign = 1
+    i = -1
+    count = 0
+    max_count = divide_by
+    indexes_buffer = [0] * max_count
+
+    def lower(x):
+        return x < 0
+
+    def greater(x):
+        return x >= 0
+
+    while i + 1 < len(numbers):
+        i += 1
+
+        comparator = greater if sign == 1 else lower
+
+        if comparator(numbers[i]):
+            if count + 1 == max_count:
+                indexes_buffer[count] = i
+
+                for j in indexes_buffer:
+                    file.write(f"{numbers[j]} ")
+
+                for j in indexes_buffer[::-1]:
+                    del numbers[j]
+
+                sign *= -1
+                i = -1
+                count = 0
+
+            else:
+                indexes_buffer[count] = i
+                count += 1
+
+    file.close()
+
+
+task15()
