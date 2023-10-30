@@ -204,63 +204,66 @@ def task14():
     write(pathg, numbers)
 
 
-def task15():
-    pathf = "Task15/f.txt"
-    pathg = "Task15/g.txt"
+# def task15():
+#     pathf = "Task15/f.txt"
+#     pathg = "Task15/g.txt"
+#
+#     write(pathf, list(range(-10, 10)))
+#
+#     numbers = readint(pathf)
+#
+#     file = open(pathg, 'w')
+#
+#     sign = 1
+#     i = -1
+#     count = 0
+#     max_count = 2
+#     indexes_buffer = [0] * max_count
+#
+#     def lower(x):
+#         return x < 0
+#
+#     def greater(x):
+#         return x >= 0
+#
+#     while i + 1 < len(numbers):
+#         i += 1
+#
+#         comparator = greater if sign == 1 else lower
+#
+#         if comparator(numbers[i]):
+#             if count + 1 == max_count:
+#                 indexes_buffer[count] = i
+#
+#                 for j in indexes_buffer:
+#                     file.write(f"{numbers[j]} ")
+#
+#                 for j in indexes_buffer[::-1]:
+#                     del numbers[j]
+#
+#                 sign *= -1
+#                 i = -1
+#                 count = 0
+#
+#             else:
+#                 indexes_buffer[count] = i
+#                 count += 1
+#
+#     file.close()
 
-    write(pathf, list(range(-10, 10)))
+
+def task15(divide_by: int = 2, directory="Task15", perm='w', fill_range: range = range(1, (2 + 1) * 4)):
+    pathf = directory + "/f.txt"
+    pathg = directory + "/g.txt"
+    if perm != "a":
+        write(pathf, [random.randint(-10, 10) for item in fill_range])
 
     numbers = readint(pathf)
+    print(len(numbers))
+    file = open(pathg, perm)
 
-    file = open(pathg, 'w')
-
-    sign = 1
-    i = -1
-    count = 0
-    max_count = 2
-    indexes_buffer = [0] * max_count
-
-    def lower(x):
-        return x < 0
-
-    def greater(x):
-        return x >= 0
-
-    while i + 1 < len(numbers):
-        i += 1
-
-        comparator = greater if sign == 1 else lower
-
-        if comparator(numbers[i]):
-            if count + 1 == max_count:
-                indexes_buffer[count] = i
-
-                for j in indexes_buffer:
-                    file.write(f"{numbers[j]} ")
-
-                for j in indexes_buffer[::-1]:
-                    del numbers[j]
-
-                sign *= -1
-                i = -1
-                count = 0
-
-            else:
-                indexes_buffer[count] = i
-                count += 1
-
-    file.close()
-
-
-def task15(divide_by: int = 2):
-    pathf = "Task15/f.txt"
-    pathg = "Task15/g.txt"
-
-    write(pathf, [random.randint(-10, 10) for item in range(1, (divide_by + 1) * 4)])
-
-    numbers = readint(pathf)
-
-    file = open(pathg, 'w')
+    if perm == "a":
+        file.write("\n")
 
     sign = 1
     i = -1
@@ -300,4 +303,67 @@ def task15(divide_by: int = 2):
     file.close()
 
 
-task15()
+def task16():
+    task15(5, "Task16", "w", range(0, 40))
+    task15(20, "Task16", "a")
+
+
+def task17():
+    pathf = "Task17/f.txt"
+    pathg = "Task17/g.txt"
+
+    write(pathf, [random.randint(0, 100) for i in range(0, 100 * 2)])
+
+    numbers = readint(pathf)
+    with open(pathg, "w") as file:
+        i = 1
+
+        while True:
+            hundred = numbers[(i - 1) * 100:i * 100]
+            if len(hundred) < 100:
+                break
+
+            file.write(f"{max(hundred)} ")
+            i += 1
+
+
+def task18():
+    path = "Task18/f.txt"
+
+    write(path, "Biba boba bom bim bam")
+
+    with open(path, "a") as file:
+        file.write("end")
+
+
+def task19():
+    pathf = "Task19/f.txt"
+    pathg = "Task19/g.txt"
+    pathh = "Task19/h.txt"
+
+    write(pathf, "Bam bim boba biba")
+    write(pathg, "Bub bim bac brick biba")
+
+    fdata = readstring(pathf).split()
+    gdata = readstring(pathg).split()
+    write(pathh, [item for item in fdata if item in gdata])
+
+
+def task20():
+    pathf = "Task20/f.txt"
+    pathg = "Task20/g.txt"
+
+    write(pathf, "biba boba bam bim badam pam pam bam")
+
+    content = readstring(pathf)
+
+    with open(pathg, "w") as file:
+        for i in range(len(content)):
+            if content[i] == "a":
+                if i - 1 >= 0:
+                    file.write(content[i - 1])
+                if i + 1 < len(content):
+                    file.write(content[i + 1])
+
+
+task20()
