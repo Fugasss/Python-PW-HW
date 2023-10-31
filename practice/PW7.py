@@ -203,79 +203,77 @@ def task14():
 
     write(pathg, numbers)
 
+    # def task15():
+    #     pathf = "Task15/f.txt"
+    #     pathg = "Task15/g.txt"
+    #
+    #     write(pathf, list(range(-10, 10)))
+    #
+    #     numbers = readint(pathf)
+    #
+    #     file = open(pathg, 'w')
+    #
+    #     sign = 1
+    #     i = -1
+    #     count = 0
+    #     max_count = 2
+    #     indexes_buffer = [0] * max_count
+    #
+    #     def lower(x):
+    #         return x < 0
+    #
+    #     def greater(x):
+    #         return x >= 0
+    #
+    #     while i + 1 < len(numbers):
+    #         i += 1
+    #
+    #         comparator = greater if sign == 1 else lower
+    #
+    #         if comparator(numbers[i]):
+    #             if count + 1 == max_count:
+    #                 indexes_buffer[count] = i
+    #
+    #                 for j in indexes_buffer:
+    #                     file.write(f"{numbers[j]} ")
+    #
+    #                 for j in indexes_buffer[::-1]:
+    #                     del numbers[j]
+    #
+    #                 sign *= -1
+    #                 i = -1
+    #                 count = 0
+    #
+    #             else:
+    #                 indexes_buffer[count] = i
+    #                 count += 1
+    #
+    #     file.close()
 
-# def task15():
-#     pathf = "Task15/f.txt"
-#     pathg = "Task15/g.txt"
-#
-#     write(pathf, list(range(-10, 10)))
-#
-#     numbers = readint(pathf)
-#
-#     file = open(pathg, 'w')
-#
-#     sign = 1
-#     i = -1
-#     count = 0
-#     max_count = 2
-#     indexes_buffer = [0] * max_count
-#
-#     def lower(x):
-#         return x < 0
-#
-#     def greater(x):
-#         return x >= 0
-#
-#     while i + 1 < len(numbers):
-#         i += 1
-#
-#         comparator = greater if sign == 1 else lower
-#
-#         if comparator(numbers[i]):
-#             if count + 1 == max_count:
-#                 indexes_buffer[count] = i
-#
-#                 for j in indexes_buffer:
-#                     file.write(f"{numbers[j]} ")
-#
-#                 for j in indexes_buffer[::-1]:
-#                     del numbers[j]
-#
-#                 sign *= -1
-#                 i = -1
-#                 count = 0
-#
-#             else:
-#                 indexes_buffer[count] = i
-#                 count += 1
-#
-#     file.close()
+
+def lower(x):
+    return x < 0
 
 
-def task15(divide_by: int = 2, directory="Task15", perm='w', fill_range: range = range(1, (2 + 1) * 4)):
-    pathf = directory + "/f.txt"
-    pathg = directory + "/g.txt"
-    if perm != "a":
-        write(pathf, [random.randint(-10, 10) for item in fill_range])
+def greater(x):
+    return x >= 0
+
+
+def task15():
+    pathf = "Task15/f.txt"
+    pathg = "Task15/g.txt"
+
+    write(pathf, list(range(-10, 10)))
 
     numbers = readint(pathf)
-    print(len(numbers))
-    file = open(pathg, perm)
 
-    if perm == "a":
-        file.write("\n")
+    file = open(pathg, "w")
 
     sign = 1
     i = -1
     count = 0
-    max_count = divide_by
+    max_count = 2
     indexes_buffer = [0] * max_count
-
-    def lower(x):
-        return x < 0
-
-    def greater(x):
-        return x >= 0
 
     while i + 1 < len(numbers):
         i += 1
@@ -304,8 +302,75 @@ def task15(divide_by: int = 2, directory="Task15", perm='w', fill_range: range =
 
 
 def task16():
-    task15(5, "Task16", "w", range(0, 40))
-    task15(20, "Task16", "a")
+    pathf = "Task16/f.txt"
+    pathg = "Task16/g.txt"
+
+    write(pathf, list(range(-20, 20)))
+
+    numbers = readint(pathf)
+    numbers_copy = numbers.copy()
+
+    file = open(pathg, "w")
+
+    sign = 1
+    i = -1
+    count = 0
+    max_count = 5
+    indexes_buffer = [0] * max_count
+
+    while i + 1 < len(numbers_copy):
+        i += 1
+
+        comparator = greater if sign == 1 else lower
+
+        if comparator(numbers_copy[i]):
+            if count + 1 == max_count:
+                indexes_buffer[count] = i
+
+                for j in indexes_buffer:
+                    file.write(f"{numbers_copy[j]} ")
+
+                for j in indexes_buffer[::-1]:
+                    del numbers_copy[j]
+
+                sign *= -1
+                i = -1
+                count = 0
+
+            else:
+                indexes_buffer[count] = i
+                count += 1
+
+    file.write('\n')
+
+    numbers_copy = numbers.copy()
+    max_count = 20
+    indexes_buffer = [0] * max_count
+
+    while i + 1 < len(numbers_copy):
+        i += 1
+
+        comparator = greater if sign == 1 else lower
+
+        if comparator(numbers_copy[i]):
+            if count + 1 == max_count:
+                indexes_buffer[count] = i
+
+                for j in indexes_buffer:
+                    file.write(f"{numbers_copy[j]} ")
+
+                for j in indexes_buffer[::-1]:
+                    del numbers_copy[j]
+
+                sign *= -1
+                i = -1
+                count = 0
+
+            else:
+                indexes_buffer[count] = i
+                count += 1
+
+    file.close()
 
 
 def task17():
@@ -366,4 +431,17 @@ def task20():
                     file.write(content[i + 1])
 
 
-task20()
+def task20_v2():
+    pathf = "Task20_v2/f.txt"
+    pathg = "Task20_v2/g.txt"
+
+    write(pathf, "bbbbbbbb a cdf dhtergnmj")
+
+    content = readstring(pathf)
+
+    first_a = content.find("a")
+
+    write(pathg, content[:first_a] + content[first_a + 1:])
+
+
+task16()
