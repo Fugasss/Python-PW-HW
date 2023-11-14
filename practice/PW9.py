@@ -1,6 +1,5 @@
 import random
 from collections import namedtuple
-from queue import Queue
 
 
 # 1
