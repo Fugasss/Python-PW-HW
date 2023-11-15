@@ -65,3 +65,19 @@ def task5():
 
 
 task5()
+
+
+# 6
+def task6():
+    pattern = r"^(\b(0[1-9]|[1-2][0-9]|3[0-1])\/\b(0[1-9]|1[0-2])\/[1-2][0-9]{3})$"
+    #print("Enter 3 dates (e.g. 13/12/1997): ")
+    
+    #inps = []
+    #for i in range(0,3):
+    #    inps.append(input())
+        
+    
+    matches = re.findall(pattern, "12/13/2000\n12/12/2000\n13/12/1000", re.M)
+    
+    #print("Input:", '\n'.join(inps))
+    print("Valid dates:", matches)
