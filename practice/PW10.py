@@ -224,7 +224,7 @@ def task15():
     print(re.findall(r'^(?:\+7|8)\s?\(?\d{3}\)?\s?\d{3}(?:\s|-)?(?:\d{2}(?:\s|-)?){2}$', numbers, re.M))
 
 
-task15()
+# task15()
 
 # 16
 def task16():
