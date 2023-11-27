@@ -1,26 +1,25 @@
-from Date import Date
+from datetime import datetime
 
 
 class Employee_Task8:
-    def __init__(self, surname, salary, birthdate: Date):
+    def __init__(self, surname, salary, birthdate: datetime):
         self.surname = surname
         self.salary = salary
         self.birthdate = birthdate
 
     def __str__(self):
-        return f'{self.surname} {self.salary} {self.experience}'
+        return f'{self.surname} {self.salary} {self.birthdate}'
 
     def __del__(self):
         del self.surname
         del self.salary
-        del self.experience
-
-        print(Employee_Task8.__name__, 'deleted')
+        del self.birthdate
 
     def calculateAge(self):
-        dy = 2023 - self.birthdate.year
-        dm = 11 - self.birthdate.month
-        dd = 26 - self.birthdate.day
+        today = datetime.today()
+        dy = today.year - self.birthdate.year
+        dm = today.month - self.birthdate.month
+        dd = today.day - self.birthdate.day
 
         if dm < 0:
             dy += 1
@@ -31,22 +30,15 @@ class Employee_Task8:
         return dy
 
     def daysBefore50(self):
-        age = self.calculateAge()
-
-        if age >= 50:
+        if self.calculateAge() >= 50:
             print(f"{self.surname} is already 50 years old")
             return
 
-        current_date = Date(26, 11, 2023)
-        final_date = Date(self.birthdate.day, self.birthdate.month, self.birthdate.year + 50)
-
-
+        print(f"{(datetime(self.birthdate.year + 50, self.birthdate.month, self.birthdate.day) - datetime.today()).days} days before 50 y.o.")
 
 
 # task 2
-d = [Employee_Task8("Biba", 25000, 4),
-     Employee_Task8("Boba", 390000, 12),
-     Employee_Task8("JoJa", 5000, 1)]
+d = [Employee_Task8("Biba", 25000, datetime(2000, 5, 12))]
 
 for i in d:
     print(i)

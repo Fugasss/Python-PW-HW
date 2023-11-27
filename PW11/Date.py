@@ -1,34 +1,46 @@
 from MyMath import *
 
+
 class Date:
+    month_days = {
+        1: 31,
+        3: 31,
+        5: 31,
+        7: 31,
+        8: 31,
+        10: 31,
+        12: 31,
+        2: 28,
+        4: 30,
+        6: 30,
+        9: 30,
+        11: 30
+    }
+
     def __init__(self, day, month, year):
 
         if year < 1:
             print("Incorrect year")
 
         if month not in range(1, 12 + 1):
-            print("Incorrect month")
-            month = repeat(month, 1, 12 + 1)
+            month = repeat(month, 1, 12)
 
         if month == 2:
             if day not in range(1, 29 + 1):
-                print('Incorrect day')
-                day = repeat(day, 1, 29 + 1)
+                day = repeat(day, 1, 29)
         elif month in [1, 3, 5, 7, 8, 10, 12]:
             if day not in range(1, 31 + 1):
-                print('Incorrect day')
-                day = repeat(day, 1, 31 + 1)
+                day = repeat(day, 1, 31)
         else:
             if day not in range(1, 30 + 1):
-                print('Incorrect day')
-                day = repeat(day, 1, 30 + 1)
+                day = repeat(day, 1, 30)
 
         self.day = day
         self.month = month
         self.year = year
 
     def __str__(self):
-        return (f'{self.day}/{self.month}/{self.year}')
+        return f'{self.day}/{self.month}/{self.year}'
 
     def __del__(self):
         del self.day
@@ -97,18 +109,6 @@ class Date:
         self.day = d
         self.month = m
         self.year = y
-
-    def __sub__(self, other):
-        if not isinstance(other, Date):
-            raise TypeError()
-
-        d = Date(self.day - other.day, self.month - other.month, self.year - other.year)
-
-        days = 366 * d.year // 4 + 365 * (d.year - d.year // 4) + d.month
-
-        d.decreaseDate(days)
-
-        return d
 
 
 # task 1
